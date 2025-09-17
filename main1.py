@@ -1,8 +1,13 @@
 import random
 import os
-from checagem import its_green, its_yellow
-from formatacao import red, green, yellow, formatar_tentativa, formatar_vazio, frase_estilizada
+from checagem1 import its_green, its_yellow
+from formatacao1 import red, green, yellow, formatar_tentativa, formatar_vazio, frase_estilizada
 
+
+def cria_ids():
+    lista = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+
+    return random.choice(lista) + random.choice(lista) + random.choice(lista) + random.choice(lista) + random.chocie(lista)
 
 def escolha_palavras():
     palavras = ["sagaz", "termo", "mexer", "nobre", "senso", "afeto", "algoz", "plena", "fazer", "assim", "sobre", "vigor", "poder", "sutil", "fosse", "cerne", "ideia", "sanar", "audaz", "moral", "inato", "desde", "muito", "justo"]
@@ -26,10 +31,10 @@ def entrada():
     ============================
     |      MENU PRINCIPAL      |
     |--------------------------| 
-    |1 - Regras                |
-    |2 - Iniciar novo jogo     | 
+    |1 - Iniciar novo jogo     |
+    |2 - Entrar em novo jogo   | 
     |3 - Encerrar              |
-    |4 - Entrar em novo jogo   |
+    |4 - Regras                |
     ============================""")
         
     resp = input('Escolha uma opção: ')
@@ -59,12 +64,20 @@ def testa_letras(palavra_secreta, tentativa):
             cores_tentativa[i] = red(tentativa[i])
     return cores_tentativa
 
+def faz_fifo(codigo, jogador):
+    fifow = '/tmp/j' + jogador + '_fifo' + codigo
+    os.mkfifo(fifow)
 
-def inicia_jogo():
+    print('O ID da sua partida é ', codigo)
+
+
+
+def inicia_jogo(codigo, jogador):
     print(f'{frase_estilizada('jogo iniciado')}')
     print('=' * 21)
     print(formatar_vazio())
     print('=' * 21)
+    faz_fifo(codigo, jogador)
 
 
 def main():
@@ -72,53 +85,51 @@ def main():
     print(f"""{frase_estilizada('PYTERMOO')}
     -> Criado por Paulo Porto e Artur Lucena""")
     entrada1 = entrada()
-    while entrada1 == '1':
+    while entrada1 == '4':
         regras()
         entrada1 = entrada()
-    
-    if entrada1 == '4':
-        id_jogo = input('Digite o ID do jogo criado. ')
-        fifow2 = '/tmp/j2_fifo' + id_jogo
-        os.mkfifo(fifow2)
-        
-        fifor2 = '/tmp/j1_fifo' + id_jogo
 
     while True:
-        if entrada1 == '2':
-            inicia_jogo()
-
-            palavra_secreta = escolha_palavras()
-            
-            chances = 0
-            max_tentativas = 6
-            win = False
-            while chances < max_tentativas and not win:
-                tentativa = valida_tentativa()
-
-                print('=' * 21)
-                print(formatar_tentativa(testa_letras(palavra_secreta, tentativa)))
-                print('=' * 21)
-
-                if tentativa == palavra_secreta:
-                    win = True    
-
-                chances += 1
-
-            if win:
-                print(f'{frase_estilizada('voce venceu')}')    
-                print(f'Você acertou a palavra: "{palavra_secreta}"')
-                break
-            else:
-                print(f'{frase_estilizada('voce perdeu')}')
-                print(f'A palavra era: "{palavra_secreta}"')
-                break
-
+   
+        if entrada1 == '1':
+            d_partida = cria_ids()
+            inicia_jogo(id_partida, entrada1)
+        elif entrada1 == '2':
+            id_partida = input('Digite o ID da partida. ')
+            inicia_jogo(id_partida, entrada1)
         elif entrada1 == '3':
             print(f'{frase_estilizada('fim de jogo')}')
             print('Encerrando sessão...')
             break
-
         else:
             print('Por favor, digite uma opção válida.')
+
+        palavra_secreta = escolha_palavras()
+        
+        chances = 0
+        max_tentativas = 6
+        win = False
+        while chances < max_tentativas and not win:
+            tentativa = valida_tentativa()
+
+            print('=' * 21)
+            print(formatar_tentativa(testa_letras(palavra_secreta, tentativa)))
+            print('=' * 21)
+
+            if tentativa == palavra_secreta:
+                win = True    
+
+            chances += 1
+
+        if win:
+            print(f'{frase_estilizada('voce venceu')}')    
+            print(f'Você acertou a palavra: "{palavra_secreta}"')
+            break
+        else:
+            print(f'{frase_estilizada('voce perdeu')}')
+            print(f'A palavra era: "{palavra_secreta}"')
+            break
+    
+    
 
 main()
