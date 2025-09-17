@@ -7,7 +7,7 @@ from formatacao1 import red, green, yellow, formatar_tentativa, formatar_vazio, 
 def cria_ids():
     lista = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
 
-    return random.choice(lista) + random.choice(lista) + random.choice(lista) + random.choice(lista) + random.choice(lista)
+    return random.choice(lista) + random.choice(lista) + random.choice(lista) + random.choice(lista) 
 
 def escolha_palavras():
     palavras = ["sagaz", "termo", "mexer", "nobre", "senso", "afeto", "algoz", "plena", "fazer", "assim", "sobre", "vigor", "poder", "sutil", "fosse", "cerne", "ideia", "sanar", "audaz", "moral", "inato", "desde", "muito", "justo"]
