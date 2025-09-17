@@ -141,7 +141,7 @@ def main():
             quantidade_letras = tupla[1]   
             if entrada1 == '1':
                 with open(fifow, 'w') as fifo:
-                    fifo.write(f'Seu adversário acertou {formatar_tentativa(quantidade_letras)} !')
+                    fifo.write(f'Seu adversário acertou {quantidade_letras} letras!')
                 
                 with open(fifor, 'r') as fifo:
                     print(fifo.read())
@@ -151,7 +151,7 @@ def main():
                     print(fifo.read())
                 
                 with open(fifow, 'w') as fifo:
-                    fifo.write(f'Seu adversário acertou {formatar_tentativa(quantidade_letras)} !')
+                    fifo.write(f'Seu adversário acertou {quantidade_letras} letras!')
 
             if tentativa == palavra_secreta :
                 win = True    
