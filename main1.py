@@ -55,29 +55,42 @@ def valida_tentativa():
 
 def testa_letras(palavra_secreta, tentativa):
     cores_tentativa = ['', '', '', '', '']
+    contador = 0
     for i in range(len(palavra_secreta)): 
         if its_green(i, palavra_secreta, tentativa):
             cores_tentativa[i] = green(tentativa[i])
+            contador += 1
         elif its_yellow(i, palavra_secreta, tentativa):
             cores_tentativa[i] = yellow(tentativa[i])
         else:
             cores_tentativa[i] = red(tentativa[i])
-    return cores_tentativa
+    return cores_tentativa, contador
 
-def faz_fifo(codigo, jogador):
+def faz_fifow(codigo, jogador):
     fifow = '/tmp/j' + jogador + '_fifo' + codigo
     os.mkfifo(fifow)
 
     print('O ID da sua partida é ', codigo)
+    return fifow
+
+
+def leitor_fifor(jogador, codigo):
+    if jogador == '1':
+        inverso = '2'
+    else:
+        inverso = '1'
+    fifor = '/tmp/j' + inverso + '_fifo' + codigo
+    return fifor
 
 
 
 def inicia_jogo(codigo, jogador):
-    print(f'{frase_estilizada('jogo iniciado')}')
+    print(f'{frase_estilizada("jogo iniciado")}')
     print('=' * 21)
     print(formatar_vazio())
     print('=' * 21)
-    faz_fifo(codigo, jogador)
+    
+    return faz_fifow(codigo, jogador)
 
 
 def main():
@@ -92,20 +105,29 @@ def main():
     while True:
    
         if entrada1 == '1':
-            d_partida = cria_ids()
-            inicia_jogo(id_partida, entrada1)
+            id_partida = cria_ids()
+            fifow = inicia_jogo(id_partida, entrada1)
+            fifor = leitor_fifor(entrada1, id_partida)
+
         elif entrada1 == '2':
             id_partida = input('Digite o ID da partida. ')
-            inicia_jogo(id_partida, entrada1)
+            fifow = inicia_jogo(id_partida, entrada1)
+            fifor = leitor_fifor(entrada1, id_partida)
+
         elif entrada1 == '3':
-            print(f'{frase_estilizada('fim de jogo')}')
+            print(f'{frase_estilizada("fim de jogo")}')
             print('Encerrando sessão...')
             break
         else:
             print('Por favor, digite uma opção válida.')
+        if entrada1 == '1':
+            palavra_secreta = escolha_palavras()
+            with open(fifow, 'w') as fifo:
+                fifo.write(palavra_secreta)
+        else:
+            with open(fifor, 'r') as fifo:
+                palavra_secreta = fifo.read()
 
-        palavra_secreta = escolha_palavras()
-        
         chances = 0
         max_tentativas = 6
         win = False
@@ -113,23 +135,40 @@ def main():
             tentativa = valida_tentativa()
 
             print('=' * 21)
-            print(formatar_tentativa(testa_letras(palavra_secreta, tentativa)))
+            print(formatar_tentativa(testa_letras(palavra_secreta, tentativa)[0]))
             print('=' * 21)
+            quantidade_letras = testa_letras(palavra_secreta, tentativa)[1]   
+            if entrada1 == '1':
+                with open(fifow, 'w') as fifo:
+                    fifo.write(f'Seu adversário acertou {formatar_tentativa(quantidade_letras)} !')
+                
+                with open(fifor, 'r') as fifo:
+                    print(fifo.read())
 
-            if tentativa == palavra_secreta:
+            else:
+                with open(fifow, 'r') as fifo:
+                    print(fifo.read())
+                
+                with open(fifow, 'r') as fifo:
+                    fifo.write(f'Seu adversário acertou {formatar_tentativa(quantidade_letras)} !')
+
+            if tentativa == palavra_secreta :
                 win = True    
 
             chances += 1
 
         if win:
-            print(f'{frase_estilizada('voce venceu')}')    
+            print(f'{frase_estilizada("voce venceu")}')    
             print(f'Você acertou a palavra: "{palavra_secreta}"')
+            with open(fifow, 'w'):
+                fifo.write('perdeu')
             break
-        else:
-            print(f'{frase_estilizada('voce perdeu')}')
+        elif not win or fifor.read() == 'perdeu':
+            print(f'{frase_estilizada("voce perdeu")}')
             print(f'A palavra era: "{palavra_secreta}"')
             break
-    
+        
+    os.remove(fifow)
     
 
 main()
