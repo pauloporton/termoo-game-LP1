@@ -135,9 +135,10 @@ def main():
             tentativa = valida_tentativa()
 
             print('=' * 21)
-            print(formatar_tentativa(testa_letras(palavra_secreta, tentativa)[0]))
+            tupla = testa_letras(palavra_secreta, tentativa)
+            print(formatar_tentativa(tupla[0]))
             print('=' * 21)
-            quantidade_letras = testa_letras(palavra_secreta, tentativa)[1]   
+            quantidade_letras = tupla[1]   
             if entrada1 == '1':
                 with open(fifow, 'w') as fifo:
                     fifo.write(f'Seu adversário acertou {formatar_tentativa(quantidade_letras)} !')
