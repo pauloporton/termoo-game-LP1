@@ -146,7 +146,7 @@ def main():
                     print(fifo.read())
 
             else:
-                with open(fifow, 'r') as fifo:
+                with open(fifor, 'r') as fifo:
                     print(fifo.read())
                 
                 with open(fifow, 'w') as fifo:
