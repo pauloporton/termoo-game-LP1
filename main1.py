@@ -69,8 +69,8 @@ def testa_letras(palavra_secreta, tentativa):
 def faz_fifow(codigo, jogador):
     fifow = '/tmp/j' + jogador + '_fifo' + codigo
     os.mkfifo(fifow)
-
-    print('O ID da sua partida é ', codigo)
+    if jogador == '1':
+        print('O ID da sua partida é ', codigo)
     return fifow
 
 
@@ -149,7 +149,7 @@ def main():
                 with open(fifow, 'r') as fifo:
                     print(fifo.read())
                 
-                with open(fifow, 'r') as fifo:
+                with open(fifow, 'w') as fifo:
                     fifo.write(f'Seu adversário acertou {formatar_tentativa(quantidade_letras)} !')
 
             if tentativa == palavra_secreta :
