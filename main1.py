@@ -15,7 +15,7 @@ def escolha_palavras():
 
 def regras():
 
-    print(f'{frase_estilizada('regras')}')
+    print(f'{frase_estilizada("regras")}')
     # regras do jogo
     print(f"""Termoo é um jogo de adivinhação onde o objetivo é descobrir uma palavra de cinco letras em até seis tentativas. A cada palpite, o jogo fornece dicas através das cores:
             
