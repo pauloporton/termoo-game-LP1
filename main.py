@@ -1,8 +1,7 @@
 import random
 from checagem import its_green, its_yellow
 from formatacao import red, green, yellow, formatar_tentativa, formatar_vazio, frase_estilizada
-
-palavras = ["sagaz", "termo", "mexer", "nobre", "senso", "afeto", "algoz", "plena", "fazer", "assim", "sobre", "vigor", "poder", "sutil", "fosse", "cerne", "ideia", "sanar", "audaz", "moral", "inato", "desde", "muito", "justo"]
+from base_palavras import palavras
 
 # título e autores
 print(f"""{frase_estilizada('PYTERMOO')}
