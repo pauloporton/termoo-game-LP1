@@ -1,5 +1,5 @@
 import random
-from checagem import its_green, its_yellow
+from checagem import its_green, its_yellow, start
 from formatacao import red, green, yellow, formatar_tentativa, formatar_vazio, frase_estilizada
 from base_palavras import palavras
 
@@ -58,13 +58,18 @@ while True:
 
             cores_tentativa = ["", "", "", "", ""]
 
+            start(palavra_secreta,tentativa)
+
             for i in range(len(palavra_secreta)): # indica se a letra é verde, amarela ou vermelha
                 if its_green(i, palavra_secreta, tentativa):
                     cores_tentativa[i] = green(tentativa[i])
-                elif its_yellow(i, palavra_secreta, tentativa):
+
+            for i in range(len(palavra_secreta)):
+                if its_yellow(i, palavra_secreta,tentativa) and cores_tentativa[i] == "":
                     cores_tentativa[i] = yellow(tentativa[i])
-                else:
+                elif cores_tentativa[i] == "":
                     cores_tentativa[i] = red(tentativa[i])
+            
 
             # Apresenta o resultado formatado
             print('=' * 21)
