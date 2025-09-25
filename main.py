@@ -15,7 +15,7 @@ def regras():
 
 def valida_entrada(tentativa, palavras):
     while True:
-        if len(tentativa) != 5 or not tentativa.isalpha() or tentativa not in palavras:
+        if len(tentativa) != 5 or not tentativa.isalpha() or  tentativa in palavras:
             print(f'ERRO! A palavra deve ter 5 caracteres e ser composta apenas por letras.')
             tentativa = input('Digite uma palavra com 5 letras: ').lower()
         else:
