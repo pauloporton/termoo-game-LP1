@@ -27,7 +27,7 @@ def its_yellow(pos, correct, guess):
 
     if (guess[pos] not in contador_correct) or (contador_correct[guess[pos]] == 0):
         return False
-    
-    contador_correct[guess[pos]] -= 1
-    return True
+    else:
+        contador_correct[guess[pos]] -= 1
+        return True
 

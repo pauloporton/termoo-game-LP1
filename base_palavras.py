@@ -30,7 +30,7 @@ palavras = [
     "epoca", "etapa", "etnia", "exame", "extra", "faixa", "fatal", "fecha", "fibra", "ficha",
     "fluir", "folga", "fraco", "freio", "furia", "fusao", "genio", "girar", "gordo", "graca",
     "graus", "grito", "guias", "heroi", "humor", "icone", "idoso", "impor", "imune", "inato",
-    "index", "indio", "juizo", "laser", "laudo", "lazer", "lenda", "lento", "lesao", "libra",
+    "index", "indio", "juizo", "laser", "laudo", "lazer", "lenda", "lento", "lesma", "libra",
     "limpo", "lindo", "linha", "lista", "logar", "longo", "louca", "luzes", "macro", "magia",
     "manga", "manha", "manso", "marco", "molde", "movel", "multa", "nasal", "navio", "nitro"
     "nicho", "odiar", "oeste", "orgao", "otica", "ousar", "pacto", "palco", "palma", "pardo",
