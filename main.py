@@ -13,9 +13,9 @@ def regras():
 {red('Vermelho')}: A letra não faz parte da palavra.""")
     
 
-def valida_entrada(tentativa):
+def valida_entrada(tentativa, palavras):
     while True:
-        if len(tentativa) != 5 or not tentativa.isalpha():
+        if len(tentativa) != 5 or not tentativa.isalpha() or tentativa not in palavras:
             print(f'ERRO! A palavra deve ter 5 caracteres e ser composta apenas por letras.')
             tentativa = input('Digite uma palavra com 5 letras: ').lower()
         else:
@@ -29,7 +29,7 @@ def escolhe_palavra():
 def testa_cores_letras(palavra_secreta, tentativa):
     cores_tentativa = ["", "", "", "", ""]
     start(palavra_secreta,tentativa)
-    
+
     for i in range(5): # indica se a letra é verde, amarela ou vermelha
         if its_green(i, palavra_secreta, tentativa):
             cores_tentativa[i] = green(tentativa[i])
@@ -86,7 +86,7 @@ if entrada1 == '2':
     while chances < max_tentativas and not win:
         # Bloco de validação de entrada
         tentativa = input('Digite uma palavra com 5 letras: ').lower()
-        valida_entrada(tentativa)
+        valida_entrada(tentativa, palavras)
         
         # Apresenta o resultado formatado
         print('=' * 21)
