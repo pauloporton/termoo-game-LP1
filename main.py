@@ -1,7 +1,8 @@
 import random
-from checagem import its_green, its_yellow, start
+from checagem import its_green, its_yellow
 from formatacao import red, green, yellow, formatar_tentativa, formatar_vazio, frase_estilizada
 from base_palavras import palavras
+from collections import Counter
 
 def regras():
     # regras do jogo
@@ -32,17 +33,21 @@ def escolhe_palavra():
 # indica se a letra é verde, amarela ou vermelha
 def testa_cores_letras(palavra_secreta, tentativa):
     cores_tentativa = ["", "", "", "", ""]
-    start(palavra_secreta,tentativa)
+    contador_letras_secretas = Counter(palavra_secreta)
 
     for i in range(5):
         if its_green(i, palavra_secreta, tentativa):
             cores_tentativa[i] = green(tentativa[i])
+            contador_letras_secretas[tentativa[i]] -= 1
 
     for i in range(5):
-        if its_yellow(i, palavra_secreta,tentativa) and cores_tentativa[i] == "":
-            cores_tentativa[i] = yellow(tentativa[i])
+        if cores_tentativa[i] != "":
+            continue
 
-        elif cores_tentativa[i] == "":
+        if its_yellow(i, contador_letras_secretas, tentativa):
+            cores_tentativa[i] = yellow(tentativa[i])
+            contador_letras_secretas[tentativa[i]] -= 1
+        else:
             cores_tentativa[i] = red(tentativa[i])
 
     return cores_tentativa
