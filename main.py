@@ -26,7 +26,6 @@ def valida_entrada():
 
 def escolhe_palavra():
     palavra = random.choice(palavras)
-    palavra = 'vigor'
     return palavra
 
 
