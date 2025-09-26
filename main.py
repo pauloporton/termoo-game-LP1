@@ -15,17 +15,18 @@ def regras():
     
 
 def valida_entrada():
-    tentativa = input('Digite uma palavra com 5 letras: ').lower()
     while True:
+        tentativa = input('Digite uma palavra com 5 letras: ').lower()
+
         if len(tentativa) != 5 or not tentativa.isalpha():
             print(f'ERRO! A palavra deve ter 5 caracteres e ser composta apenas por letras sem acento.')
-            tentativa = input('Digite uma palavra com 5 letras: ').lower()
         else:
             return tentativa
-    
+   
 
 def escolhe_palavra():
     palavra = random.choice(palavras)
+    palavra = 'vigor'
     return palavra
 
 
@@ -117,5 +118,6 @@ def main():
 
         else:
             print('Por favor, digite uma opção válida.')
+
 
 main()
